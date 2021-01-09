@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  describe 'Validations' do
-    subject(:project) { described_class.new(attributes) }
+  subject(:project) { described_class.new(attributes) }
 
+  describe 'Validations' do
     describe 'name' do
       context 'when name is not sent' do
         let(:attributes) { { name: nil } }
@@ -17,15 +17,35 @@ RSpec.describe Project, type: :model do
       end
 
       context 'when name is sent' do
-        let(:attributes) { { name: 'Groundhog project' } }\
+        let(:attributes) { { name: 'Groundhog project' } }
 
         it 'does not save if name is already taken' do
+          project.save
+          project_with_same_name = project.dup
+
+          expect { project_with_same_name.save! }.to raise_error(ActiveRecord::RecordInvalid)
         end
 
-        it 'saves if name is not taken yet' do
+        it 'saves if name is unique' do
+          expect{ project.save }.to change{ Project.count }.by(1)
         end
       end
     end
+  end
+
+  describe 'Defaults' do
+    describe 'status' do
+      context 'when no attributes are given' do
+        let(:attributes) { {} }
+
+        it 'defines status as draft before validation' do
+          expect { project.valid? }
+            .to change { project.status }
+            .from(nil).to('draft')
+        end
+      end
+    end
+
   end
 end
 
