@@ -34,19 +34,24 @@ RSpec.describe Project, type: :model do
   end
 
   describe 'Defaults' do
-    describe 'status' do
-      context 'when no attributes are given' do
-        let(:attributes) { {} }
+    context 'when no attributes are given' do
+      let(:attributes) { {} }
 
-        it 'defines status as draft before validation' do
-          expect { project.valid? }
-            .to change { project.status }
-            .from(nil).to('draft')
-        end
+      it 'defines status as draft before validation' do
+        expect { project.valid? }
+          .to change { project.status }
+          .from(nil).to('draft')
       end
     end
 
+    context 'when attributes are given' do
+      context 'and it is a status' do
+        let(:attributes) { { status: :in_progress } }
+
+        it 'defines status as in_progress' do
+          expect(project.status).to eq('in_progress')
+        end
+      end
+    end
   end
 end
-
-# todo - use change block for active record validation in project model
