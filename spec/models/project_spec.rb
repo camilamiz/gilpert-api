@@ -54,4 +54,17 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  # describe 'Associations' do
+  #   let(:attributes) {
+  #     {
+  #       name: 'Groundhog project',
+  #       status: :in_progress
+  #     }
+  #   }
+
+  #   context 'with all valid attributes' do
+  #     it { should have_many(:tasks) }
+  #   end
+  # end
 end
