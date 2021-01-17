@@ -1,0 +1,7 @@
+draft_task_one:
+  description: 'Start project'
+  optimistic: 2.0
+  most_likely: 4.0
+  pessimistic: 5.0
+  mean: 3.67
+  standard_deviation: 3.83

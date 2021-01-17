@@ -1,0 +1,5 @@
+draft_project:
+  name: 'Groundhog Project'
+  status: 0
+  mean_total: 20.0
+  standard_deviation: 3.0
