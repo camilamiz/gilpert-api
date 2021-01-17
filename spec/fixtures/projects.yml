@@ -3,3 +3,10 @@ draft_project:
   status: 0
   mean_total: 20.0
   standard_deviation: 3.0
+
+in_progress_project:
+  name: 'Whale Project'
+  status: 1
+  mean_total: 20.0
+  standard_deviation: 3.0
+  started_at: 2020-12-12
