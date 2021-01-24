@@ -2,3 +2,10 @@ project:
   id: 1
   name: 'Groundhog Project'
   status: 0
+
+in_progress:
+  <<: *project
+  status: 1
+  mean_total: 11.83
+  standard_deviation: 1.12
+  started_at: 2021-01-01
