@@ -7,6 +7,13 @@ RSpec.describe Project, type: :model do
   subject(:project) { projects(:project) }
   fixtures :tasks
 
+
+  describe 'Associations' do
+    context 'has many tasks' do
+      it { should respond_to(:tasks) }
+    end
+  end
+
   describe 'Validations' do
     describe 'name' do
       context 'when name is not sent' do
@@ -36,51 +43,78 @@ RSpec.describe Project, type: :model do
     describe 'status' do
       context 'when in_progress' do
         context 'mean_total' do
-          it 'is present' do
+          context 'is not present' do
+            it 'requires its presence' do
 
+            end
           end
 
-          it 'equals the sum of tasks\'  means' do
+          context 'is present' do
+            it 'is the sum of tasks\'  means' do
 
+            end
           end
         end
 
         context 'standard_deviation' do
-          it 'is present' do
+          context 'is not present' do
+            it 'requires its presenc' do
 
+            end
           end
+          context 'is present' do
+            it 'is the square root of tasks\' standard_deviations sum' do
 
-          it 'equals the square root of tasks\' standard_deviations sum' do
-
+            end
           end
         end
 
-        it 'started_at is present' do
+        context 'started_at' do
+          context 'is not present' do
+            it 'requires its presence' do
 
+            end
+
+            it 'is the same as the first task to start' do
+
+            end
+          end
         end
       end
 
       context 'when finished' do
         context 'actual_duration' do
-          it 'is present' do
+          context 'is not present' do
+            it 'requires its presence' do
 
+            end
           end
 
-          it 'equals the sum of tasks\' actual sum' do
+          context 'is present' do
+            it 'is the sum of tasks\' actual sum' do
 
+            end
           end
         end
 
-        it 'ended_at is present' do
+        context 'ended_at' do
+          context 'is not present' do
+            it 'requires its presence' do
 
+            end
+          end
+
+          context 'is present' do
+            it 'is started_at plus actual duration' do
+
+            end
+
+            it 'is the same as the last task to end' do
+
+            end
+          end
         end
       end
-    end
-  end
-
-  describe 'Associations' do
-    context 'has many tasks' do
-      it { should respond_to(:tasks) }
     end
   end
 
