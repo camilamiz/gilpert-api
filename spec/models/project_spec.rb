@@ -32,10 +32,54 @@ RSpec.describe Project, type: :model do
         end
       end
     end
+
+    describe 'status' do
+      context 'when in_progress' do
+        context 'mean_total' do
+          it 'is present' do
+
+          end
+
+          it 'equals the sum of tasks\'  means' do
+
+          end
+        end
+
+        context 'standard_deviation' do
+          it 'is present' do
+
+          end
+
+          it 'equals the square root of tasks\' standard_deviations sum' do
+
+          end
+        end
+
+        it 'started_at is present' do
+
+        end
+      end
+
+      context 'when finished' do
+        context 'actual_duration' do
+          it 'is present' do
+
+          end
+
+          it 'equals the sum of tasks\' actual sum' do
+
+          end
+        end
+
+        it 'ended_at is present' do
+
+        end
+      end
+    end
   end
 
   describe 'Associations' do
-    context 'has many asks' do
+    context 'has many tasks' do
       it { should respond_to(:tasks) }
     end
   end
@@ -55,9 +99,10 @@ RSpec.describe Project, type: :model do
 
     context 'when attributes are given' do
       context 'and it is a status' do
+        let(:attributes) { { status: :in_progress } }
+
         it 'defines status as in_progress' do
-          project.in_progress!
-          expect(project.status).to eq('in_progress')
+          expect(new_project.status).to eq('in_progress')
         end
       end
     end
