@@ -1,13 +1,9 @@
 class Task < ApplicationRecord
   belongs_to :project
 
-  validates :description, presence: true
-  validates :optimistic, presence: true
-  validates :most_likely, presence: true
-  validates :pessimistic, presence: true
+  validates :description, :optimistic, :most_likely, :pessimistic, presence: true
 
-  after_validation :set_mean
-  after_validation :set_standard_deviation
+  after_validation :set_mean, :set_standard_deviation
 
   private
 
