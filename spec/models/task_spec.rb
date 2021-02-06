@@ -4,22 +4,28 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   subject(:task) { described_class.new(attributes) }
+
   let(:project) { Project.create(
       name: 'Groundhog Project',
       status: 1
     ) }
 
+  let(:attributes) {
+    {
+      description: description,
+      optimistic: optimistic,
+      most_likely: most_likely,
+      pessimistic: pessimistic,
+      project_id: project.id
+    }
+  }
+
   describe 'Validations' do
     context 'when all required fields are sent' do
-      let(:attributes) {
-        {
-          description: 'Groundhog task',
-          optimistic: 3,
-          most_likely: 5,
-          pessimistic: 7,
-          project_id: project.id
-        }
-      }
+      let(:description) { 'Groundhog project' }
+      let(:optimistic) { 3.0 }
+      let(:most_likely) { 7.0 }
+      let(:pessimistic) { 5.0 }
 
       it 'accepts the task' do
         task.valid?
@@ -27,24 +33,52 @@ RSpec.describe Task, type: :model do
       end
     end
 
-  #   context 'when description is not sent' do
-  #     let(:attributes) { { description: nil } }
+    context 'when description is not sent' do
+      let(:description) { nil }
+      let(:optimistic) { 3.0 }
+      let(:most_likely) { 7.0 }
+      let(:pessimistic) { 5.0 }
 
-  #     it 'requires a description' do
-  #       debugger
-  #       expect(task).to be_invalid
-  #       expect(task.errors.details[:description]).to include(a_hash_including(error: :blank))
-  #     end
+      it 'requires its presence' do
+        expect(task).to be_invalid
+        expect(task.errors.details[:description]).to include(a_hash_including(error: :blank))
+      end
+    end
+
+    context 'when an optimistic estimative is not sent' do
+      let(:description) { 'Groundhog project' }
+      let(:optimistic) { nil }
+      let(:most_likely) { 7.0 }
+      let(:pessimistic) { 5.0 }
+
+      it 'requires its presence' do
+        expect(task.errors.details[:optimistic]).to include(a_hash_including(error: :blank))
+      end
+    end
+
+  end
+
+  # describe 'After Validations' do
+
+  #         it 'sets the mean' do
+  #           task.save
+  #           expect(task.mean).to eq 6.0
+  #         end
+
+  #         it 'sets the standard deviation' do
+  #           task.save
+  #           expect(task.standard_deviation).to eq 0.33
+  #         end
+
+
+  #   context 'when an optimistic estivative is not sent' do
+  #     let(:description) { 'Groundhog project' }
+  #     let(:optimistic) { nil }
+  #     let(:most_likely) { 7.0 }
+  #     let(:pessimistic) { 5.0 }
+
+  #     it { is_expected.to validate_presence_of :optimistic }
   #   end
-
-  #     context 'when description is sent' do
-  #       let(:attributes) { { description: 'Groundhog task' } }
-
-  #       it 'saves the task' do
-  #         debugger
-
-  #       end
-  #     end
   # end
 
   # describe 'Associations' do
