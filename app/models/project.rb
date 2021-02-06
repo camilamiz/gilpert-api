@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+  attr_accessor :name, :started_at, :ended_at
+  attr_reader :mean_total, :standard_deviation, :actual_duration, :status
+
   has_many :tasks
 
   enum status: { draft: 0, in_progress: 1, finished: 2 }
