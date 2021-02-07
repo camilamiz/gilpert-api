@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  subject(:task) { described_class.new(attributes) }
-
   let(:project) { Project.create(
       name: 'Groundhog Project',
       status: 1
@@ -21,6 +19,8 @@ RSpec.describe Task, type: :model do
   }
 
   describe 'Validations' do
+    subject(:task) { described_class.new(attributes) }
+
     context 'when all required fields are sent' do
       let(:description) { 'Groundhog project' }
       let(:optimistic) { 3.0 }
@@ -51,35 +51,33 @@ RSpec.describe Task, type: :model do
       let(:most_likely) { 7.0 }
       let(:pessimistic) { 5.0 }
 
-      it 'requires its presence' do
-        expect(task.errors.details[:optimistic]).to include(a_hash_including(error: :blank))
+      it 'requires its presence before saving' do
+        expect(task).to be_invalid
+        expect(task.errors.details[:optimistic]).to include(error: :blank)
       end
     end
-
   end
 
-  # describe 'After Validations' do
+  describe 'Defaults' do
+    subject(:task) { described_class.new(attributes) }
 
-  #         it 'sets the mean' do
-  #           task.save
-  #           expect(task.mean).to eq 6.0
-  #         end
+    context 'when all three estimations are given' do
+      let(:description) { 'Groundhog project' }
+      let(:optimistic) { 3.0 }
+      let(:most_likely) { 7.0 }
+      let(:pessimistic) { 5.0 }
 
-  #         it 'sets the standard deviation' do
-  #           task.save
-  #           expect(task.standard_deviation).to eq 0.33
-  #         end
+      it 'calculates the task\'s mean' do
+        task.save
+        expect(task.mean).to eq 6.0
+      end
 
-
-  #   context 'when an optimistic estivative is not sent' do
-  #     let(:description) { 'Groundhog project' }
-  #     let(:optimistic) { nil }
-  #     let(:most_likely) { 7.0 }
-  #     let(:pessimistic) { 5.0 }
-
-  #     it { is_expected.to validate_presence_of :optimistic }
-  #   end
-  # end
+      it 'calculates the task\'s standard deviation' do
+        task.save
+        expect(task.standard_deviation).to eq 0.33
+      end
+    end
+  end
 
   # describe 'Associations' do
   #   it 'belongs to a project' do
