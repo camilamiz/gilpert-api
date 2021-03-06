@@ -78,15 +78,4 @@ RSpec.describe Task, type: :model do
       end
     end
   end
-
-  # describe 'Associations' do
-  #   it 'belongs to a project' do
-
-  #   end
-
-  # end
-
-  # describe 'Defaults' do
-
-  # end
 end
