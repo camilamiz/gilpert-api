@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_012843) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
-    t.integer "status"
+    t.integer "status", default: 0, null: false
     t.float "mean_total"
     t.float "standard_deviation"
     t.float "actual_duration"
