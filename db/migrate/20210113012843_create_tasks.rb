@@ -2,9 +2,9 @@ class CreateTasks < ActiveRecord::Migration[6.0]
   def change
     create_table :tasks do |t|
       t.string :description
-      t.float :optimistic
-      t.float :most_likely
-      t.float :pessimistic
+      t.float :optimistic, null: false
+      t.float :most_likely, null: false
+      t.float :pessimistic, null: false
       t.float :mean
       t.float :standard_deviation
       t.float :actual
