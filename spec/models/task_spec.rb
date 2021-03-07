@@ -56,25 +56,43 @@ RSpec.describe Task, type: :model do
         expect(task.errors.details[:optimistic]).to include(error: :blank)
       end
     end
+
   end
 
-  describe 'Defaults' do
-    subject(:task) { described_class.new(attributes) }
-
+  describe 'After validations' do
+    subject(:task) {
+      described_class.create(
+        description: 'GroundHog Project',
+        optimistic: 3.0,
+        most_likely: 7.0,
+        pessimistic: 9.0
+      )
+    }
     context 'when all three estimations are given' do
-      let(:description) { 'Groundhog project' }
-      let(:optimistic) { 3.0 }
-      let(:most_likely) { 7.0 }
-      let(:pessimistic) { 5.0 }
 
       it 'calculates the task\'s mean' do
-        task.save
-        expect(task.mean).to eq 6.0
+        expect(task.mean).to eq 6.66
       end
 
       it 'calculates the task\'s standard deviation' do
-        task.save
-        expect(task.standard_deviation).to eq 0.33
+        expect(task.standard_deviation).to eq 1.0
+      end
+    end
+
+    context 'when an estimation is updated' do
+      it 'changes the respective estimation' do
+        task.update(pessimistic: 11.5)
+        expect(task.pessimistic).to eq 11.5
+      end
+
+      it 'recalculates the mean value accordingly' do
+        task.update(pessimistic: 11.5)
+        expect(task.mean).to eq 7.08
+      end
+
+      it 'recalculates the standard deviation value accordingly' do
+        task.update(pessimistic: 11.5)
+        expect(task.standard_deviation).to eq 1.41
       end
     end
   end
