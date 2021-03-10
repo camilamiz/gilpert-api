@@ -1,7 +1,4 @@
 class Project < ApplicationRecord
-  attr_accessor :name, :started_at, :ended_at
-  attr_reader :mean_total, :standard_deviation, :actual_duration, :status
-
   has_many :tasks
 
   enum status: { draft: 0, in_progress: 1, finished: 2 }
@@ -11,16 +8,19 @@ class Project < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validate :mean_total
 
-
   private
 
   def fill_default_values
     self.status ||= self.class.statuses[:draft]
   end
 
-  # def mean_total
-  #   if self.mean_total.nil? && (self.status == 'in_progress' || self.status == 'finished')
-  #     errors.add(:mean_total, 'must not be nil when status is in_progress or finished')
-  #   end
-  # end
+  def mean_total
+    return if tasks.empty?
+    debugger
+    # self.mean_total = tasks.
+
+    if self.mean_total.nil? && (self.status == 'in_progress' || self.status == 'finished')
+      errors.add(:mean_total, 'must not be nil when status is in_progress or finished')
+    end
+  end
 end

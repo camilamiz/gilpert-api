@@ -37,6 +37,14 @@ RSpec.describe Project, type: :model do
         end
       end
     end
+
+    describe 'mean_total' do
+      context ' when project hasn\'t got any tasks' do
+        it 'is nil' do
+          expect(project.mean_total).to be_nil
+        end
+      end
+    end
   end
 
   describe 'Defaults' do
@@ -46,9 +54,7 @@ RSpec.describe Project, type: :model do
       let(:attributes) { {} }
 
       it 'defines status as draft before validation' do
-        expect { project.valid? }
-          .to change { project.status }
-          .from(nil).to('draft')
+        expect(project.status).to eq('draft')
       end
     end
 
