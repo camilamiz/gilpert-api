@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 2021_01_13_012843) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "description"
-    t.float "optimistic", null: false
-    t.float "most_likely", null: false
-    t.float "pessimistic", null: false
+    t.float "optimistic"
+    t.float "most_likely"
+    t.float "pessimistic"
     t.float "mean"
     t.float "standard_deviation"
     t.float "actual"
