@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :project
 
-  validates :description, :optimistic, :most_likely, :pessimistic, presence: true
+  validates :description, presence: true
   validate :calculate_mean, :calculate_standard_deviation, on: [:create, :update]
 
   private

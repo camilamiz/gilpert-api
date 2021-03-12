@@ -13,14 +13,4 @@ class Project < ApplicationRecord
   def fill_default_values
     self.status ||= self.class.statuses[:draft]
   end
-
-  def mean_total
-    return if tasks.empty?
-    debugger
-    # self.mean_total = tasks.
-
-    if self.mean_total.nil? && (self.status == 'in_progress' || self.status == 'finished')
-      errors.add(:mean_total, 'must not be nil when status is in_progress or finished')
-    end
-  end
 end

@@ -44,19 +44,6 @@ RSpec.describe Task, type: :model do
         expect(task.errors.details[:description]).to include(a_hash_including(error: :blank))
       end
     end
-
-    context 'when an optimistic estimative is not sent' do
-      let(:description) { 'Groundhog project' }
-      let(:optimistic) { nil }
-      let(:most_likely) { 7.0 }
-      let(:pessimistic) { 5.0 }
-
-      it 'requires its presence before saving' do
-        expect(task).to be_invalid
-        expect(task.errors.details[:optimistic]).to include(error: :blank)
-      end
-    end
-
   end
 
   describe 'After validations' do

@@ -38,13 +38,13 @@ RSpec.describe Project, type: :model do
       end
     end
 
-    describe 'mean_total' do
-      context ' when project hasn\'t got any tasks' do
-        it 'is nil' do
-          expect(project.mean_total).to be_nil
-        end
-      end
-    end
+    # describe 'mean_total' do
+    #   context ' when project hasn\'t got any tasks' do
+    #     it 'is nil' do
+    #       expect(project.mean_total).to be_nil
+    #     end
+    #   end
+    # end
   end
 
   describe 'Defaults' do
