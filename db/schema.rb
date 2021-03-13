@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_012843) do
     t.float "actual"
     t.date "started_at"
     t.date "ended_at"
-    t.integer "project_id", null: false
+    t.integer "project_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_tasks_on_project_id"
