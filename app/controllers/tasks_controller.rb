@@ -1,12 +1,14 @@
 #frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :set_task, only: [:show, :update]
+
   def index
     @tasks = Tasks.all
   end
 
   def show
-    @task = Task.find(params[:id])
+    render json: @task
   end
 
   def new
@@ -23,13 +25,22 @@ class TasksController < ApplicationController
     end
   end
 
-  # def edit
-  # end
+  def edit
+  end
 
-  # def update
-  # end
+  def update
+    if @task.update(permitted_params)
+      render json: @task
+    else
+      render_error
+    end
+  end
 
   private
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def permitted_params
     params.require(:task).permit(
@@ -41,5 +52,10 @@ class TasksController < ApplicationController
       :started_at,
       :ended_at
     )
+  end
+
+  def render_error
+    render json: { errors: @task.errors.full_messages },
+      status: :unprocessable_entity
   end
 end
