@@ -1,7 +1,7 @@
 #frozen_string_literal: true
 
 class Task < ApplicationRecord
-  belongs_to :project
+  belongs_to :project, optional: true
 
   validates :description, presence: true
   validate :calculate_mean, :calculate_standard_deviation, on: [:create, :update]
