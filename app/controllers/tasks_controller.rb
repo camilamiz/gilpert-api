@@ -4,15 +4,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update]
 
   def index
-    @tasks = Tasks.all
+    @tasks = Task.all
+    render json: @tasks
   end
 
   def show
     render json: @task
-  end
-
-  def new
-    @task = Task.new
   end
 
   def create
@@ -23,9 +20,6 @@ class TasksController < ApplicationController
     else
       render_error
     end
-  end
-
-  def edit
   end
 
   def update
@@ -50,7 +44,8 @@ class TasksController < ApplicationController
       :pessimistic,
       :actual,
       :started_at,
-      :ended_at
+      :ended_at,
+      :project_id
     )
   end
 
