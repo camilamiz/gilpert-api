@@ -38,9 +38,7 @@ class Api::V1::ProjectsController < ApplicationController
 
   def permitted_params
     params.require(:project).permit(
-      :name,
-      :started_at,
-      :ended_at
+      :name
     )
   end
 end

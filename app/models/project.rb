@@ -8,7 +8,7 @@ class Project < ApplicationRecord
   after_initialize :set_defaults
 
   validates :name, presence: true, uniqueness: true
-  validate :calculate_mean_total, on: [:create, :update]
+  validate :mean_total, :standard_deviation, :actual_duration, on: [:create, :update]
 
   private
 
@@ -16,17 +16,33 @@ class Project < ApplicationRecord
     self.status ||= self.class.statuses[:draft]
   end
 
-  def calculate_mean_total
+  def mean_total
     return 0 if tasks.empty?
-    self.mean = (tasks.pluck(:mean).reduce(:+)).floor(2)
+    self.mean_total = (tasks.pluck(:mean).reduce(:+)).floor(2)
   end
 
-  # def calculate_standard_deviation
-  #   return if (optimistic.blank? || most_likely.blank? || pessimistic.blank?)
-  #   self.standard_deviation = ((self.pessimistic - self.optimistic)/6).floor(2)
-  # end
+  def standard_deviation
+    tasks_standard_deviation = tasks.pluck(:standard_deviation).map do |task_standard_deviation|
+      task_standard_deviation**2
+    end.reduce(:+).**0.5
 
-  #TODO
-  #adicionar migration para colocar default 0 nas estimativas de tasks
-  # arrumar testes
+    tasks_standard_deviation.floor(2)
+  end
+
+  def actual_duration
+    self.actual_duration = (ended_at - started_at).floor(0)
+  end
+
+  def ended_at
+    return Date.today if tasks.pluck(:ended_at).empty?
+    tasks.pluck(:ended_at).compact.max
+  end
+
+  def started_at
+    return 0 if tasks.pluck(:started_at).empty?
+    tasks.pluck(:started_at).compact.min
+  end
+
+  # TODO
+  #   TERMINAR TESTES
 end
